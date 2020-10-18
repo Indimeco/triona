@@ -1,0 +1,7 @@
+// TODO Confirm alarm time and message
+// TODO create terraform configuration
+// TODO create command framework and master switch
+
+// REVIEW can the server run on DST or only EST?
+// REVIEW possible actions when alarm instead of role mentions
+// REVIEW decide if alarms should be configurable by the guild
