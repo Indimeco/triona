@@ -1,6 +1,12 @@
 export type AlarmConfig = {
-    name: string;
-    time: string;
-    role: string;
+    channel: string;
     message: string;
+    name: string;
+    role: string;
+    time: string;
+}
+
+export type GuildData = {
+    serverTimezone: string;
+    alarms: AlarmConfig[],
 }

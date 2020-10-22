@@ -1,3 +1,7 @@
-export const config = {
-    SERVER_TIMEZONE: "UTC-4",
+export type ConfigSchema = {
+    dataPath: string;
+}
+
+export const config: ConfigSchema = {
+    dataPath: 'data'
 }
