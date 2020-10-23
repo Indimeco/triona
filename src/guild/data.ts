@@ -1,4 +1,6 @@
-import { guildDataFileFactory } from './fs';
-import { GetGuildDataFactory } from './types';
+import { guildDataFileFactory, guildDataFileWriter } from './fs';
+import { GetGuildDataFactory, WriteGuildDataFactory } from './types';
 
 export const getGuildData: GetGuildDataFactory = guildDataFileFactory;
+
+export const writeGuildData: WriteGuildDataFactory = guildDataFileWriter;

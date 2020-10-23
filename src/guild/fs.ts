@@ -3,7 +3,7 @@ import { andThen, pipe, invoker } from 'ramda';
 import { GuildData } from '../types';
 import { config, ConfigSchema } from '../config';
 import { PathLike, promises } from 'fs';
-import { GetGuildDataFactory } from './types';
+import { GetGuildDataFactory, WriteGuildDataFactory } from './types';
 const { readFile, stat, mkdir, writeFile } = promises;
 
 /**
@@ -60,6 +60,15 @@ const getGuildDataFromFile = (config: ConfigSchema, guildId: string): () => Prom
             )
         ),
     );
+
+const writeGuildDataToFile = async (config: ConfigSchema, guildId: string, data: GuildData) => {
+    const path = resolve(getGuildFileName(config, guildId));
+    return writeFile(path, JSON.stringify(data));
+}
+
+export const guildDataFileWriter: WriteGuildDataFactory = async (guildId: string, data: GuildData) => {
+    return writeGuildDataToFile(config, guildId, data);
+}
 
 export const guildDataFileFactory: GetGuildDataFactory = async (guildId: string) => {
     await initData(config);
