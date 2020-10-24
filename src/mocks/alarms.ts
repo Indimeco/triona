@@ -1,4 +1,4 @@
-import { AlarmConfig } from './types';
+import { AlarmConfig } from '../types';
 
 export const alarms: AlarmConfig[] = [
     {
