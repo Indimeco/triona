@@ -3,15 +3,16 @@ import { Message } from 'discord.js';
 import { getCommand, getArgs } from './parse';
 
 import { getAction } from './actions';
-import { writeGuildData } from '../guild';
+import { getGuildData, modifyGuildData, writeGuildData } from '../guild';
 
-export const processCommand = (config: ConfigSchema, message: Message) => {
+export const processCommand = async (config: ConfigSchema, message: Message) => {
     if (message.author.bot) return null;
     const guildId = message.guild?.id;
     if (!guildId) {
-        message.reply('Triona only works for guilds! Try adding her to a server.');
+        message.reply('Triona only works for guilds for now! Try adding her to a server.');
         return null;
     }
+    const guildData = await getGuildData(guildId);
 
     const prefix = config.prefix;
     const messageContent = message.content;
@@ -21,7 +22,11 @@ export const processCommand = (config: ConfigSchema, message: Message) => {
 
     const action = getAction(command);
     if (action) {
-        const newGuildData = action.exec(message, args);
-        if (newGuildData) writeGuildData(guildId, newGuildData)
+        const dispatch = action.exec(message, args);
+        if (dispatch) {
+            const newGuildData = modifyGuildData(guildData, dispatch);
+            writeGuildData(guildId, newGuildData);
+            message.channel.send("Got it!");
+        }
     }
 }
