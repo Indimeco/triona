@@ -2,3 +2,6 @@
 // TODO create alarm event loop
 // TODO create deletealarm command
 // TODO add tests to command framework
+// TODO prevent duplicate alarms from being added
+// TODO add set server time command
+// TODO add list alarms command
