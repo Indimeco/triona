@@ -1,33 +1,48 @@
 import { ActionItem } from "."
-import { AlarmConfig, AlarmOccurence } from "../../types";
+import { AlarmConfig, AlarmFrequency } from "../../types";
 import { SetAlarmAction } from '../../guild';
-import { empty, join, isEmpty } from "ramda";
+import { join, isEmpty } from "ramda";
+import { getAlarmTime } from "../../time/alarm";
 
 export const setAlarm: ActionItem = {
     command: 'setalarm',
     desc: `Create an alarm for a specific server time`,
-    usage: 'setalarm <name> <once|daily|weekly|monthly> <24_hour_time> <channel> <role> <message>',
+    usage: 'setalarm <name> <once|daily|weekly|monthly> <day_of_week|day_of_month> <24_hour_time> <channel> <role> <message>',
     exec: (m, args) => {
-        const [name, occurrence, time, channel, role, ...messageWords] = args;
-        if (!name || !occurrence || !time || !channel || !role || isEmpty(messageWords)) {
-            m.channel.send("I don't understand. Try `help setalarm` for details.");
-            return;
+        const [name, frequency, day, time, channel, role, ...messageWords] = args;
+
+        try {
+            if (!name || !frequency || !day || !time || !channel || !role || isEmpty(messageWords)) {
+                throw new Error("Insufficient arguments");
+            }
+
+            const message = join(' ', messageWords);
+
+            const newAlarm: AlarmConfig = {
+                name,
+                frequency: AlarmFrequency[frequency as keyof typeof AlarmFrequency],
+                day,
+                time,
+                channel,
+                role,
+                message
+            };
+
+            const alarmTime = getAlarmTime('UTC+0', newAlarm);
+            if (!alarmTime.isValid) {
+                throw new Error(`${alarmTime.invalidExplanation}`);
+            }
+
+            const dispatch: SetAlarmAction = {
+                name: 'setalarm',
+                value: newAlarm
+            };
+            return dispatch;
+
         }
-
-        const message = join(' ', messageWords);
-
-        const newAlarm: AlarmConfig = {
-            name,
-            occurrence: AlarmOccurence[occurrence as keyof typeof AlarmOccurence],
-            time,
-            channel,
-            role,
-            message
-        };
-        const dispatch: SetAlarmAction = {
-            name: 'setalarm',
-            value: newAlarm
-        };
-        return dispatch;
+        catch (err) {
+            console.log(err);
+            m.channel.send(`${err}! Try \`help setalarm\` for usage.`);
+        }
     }
 }

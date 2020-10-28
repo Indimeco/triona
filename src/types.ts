@@ -1,4 +1,4 @@
-export enum AlarmOccurence {
+export enum AlarmFrequency {
     once = 'once',
     daily = 'daily',
     weekly = 'weekly',
@@ -7,7 +7,8 @@ export enum AlarmOccurence {
 
 export type AlarmConfig = {
     name: string;
-    occurrence: AlarmOccurence;
+    frequency: AlarmFrequency;
+    day: string;
     time: string;
     channel: string;
     role: string;

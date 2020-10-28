@@ -2,4 +2,3 @@
 // TODO create alarm event loop
 // TODO create deletealarm command
 // TODO add tests to command framework
-// TODO modify command arg regex to allow for some special characters, e.g, colons, exclamation marks

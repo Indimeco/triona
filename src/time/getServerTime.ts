@@ -1,7 +1,8 @@
 import { DateTime, Settings } from 'luxon';
+import { GuildData } from '../types';
 
 Settings.throwOnInvalid = true;
 
-export function getServerTime(zone: string): string {
-    return DateTime.fromObject({ zone }).toString();
+export function getServerTime(guildData: GuildData): string {
+    return DateTime.fromObject({ zone: guildData.serverTimezone }).toString();
 }
