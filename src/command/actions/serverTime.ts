@@ -1,0 +1,17 @@
+import { ActionItem } from "../types";
+import { getServerTime } from "../../time/time";
+
+export const serverTime: ActionItem = {
+    command: 'servertime',
+    desc: `Displays current configured server time`,
+    usage: 'servertime',
+    exec: (m, args, guildData) => {
+        const timeFormat = {
+            weekday: "long",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+        const time = getServerTime(guildData).toLocaleString(timeFormat);
+        m.channel.send(`Current server time: ${time}`);
+    }
+}

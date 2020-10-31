@@ -2,7 +2,7 @@ import { ConfigSchema } from '../config';
 import { Message } from 'discord.js';
 import { getCommand, getArgs } from './parse';
 
-import { getAction } from './actions';
+import { getAction } from './getAction';
 import { getGuildData, modifyGuildData, writeGuildData } from '../guild';
 
 export const processCommand = async (config: ConfigSchema, message: Message) => {
@@ -12,7 +12,6 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
         message.reply('Triona only works for guilds for now! Try adding her to a server.');
         return null;
     }
-    const guildData = await getGuildData(guildId);
 
     const prefix = config.prefix;
     const messageContent = message.content;
@@ -22,11 +21,20 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
 
     const action = getAction(command);
     if (action) {
-        const dispatch = action.exec(message, args);
+        /**
+         * There is no method for caching data atm
+         * which means we read from fs on every command 
+        */
+        const guildData = await getGuildData(guildId);
+
+        const dispatch = action.exec(message, args, guildData);
         if (dispatch) {
             const newGuildData = modifyGuildData(guildData, dispatch);
             writeGuildData(guildId, newGuildData);
             message.channel.send("Got it!");
         }
+    }
+    else {
+        message.channel.send("I'm not sure about that. Try `help` for available commands~")
     }
 }

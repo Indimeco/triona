@@ -1,4 +1,4 @@
-import { ActionItem } from "."
+import { ActionItem } from "../types";
 import { AlarmConfig, AlarmFrequency } from "../../types";
 import { SetAlarmAction } from '../../guild';
 import { join, isEmpty } from "ramda";
@@ -7,7 +7,8 @@ import { getAlarmTime } from "../../time/alarm";
 export const setAlarm: ActionItem = {
     command: 'setalarm',
     desc: `Create an alarm for a specific server time`,
-    usage: 'setalarm <name> <once|daily|weekly|monthly> <day_of_week|day_of_month> <24_hour_time> <channel> <role> <message>',
+    usage: 'setalarm <unique_name> <once|daily|weekly|monthly> <day_of_week|day_of_month> <24_hour_time> <channel> <role> <message>',
+    example: 'setalarm danceparty daily tuesday 22:00 general here Come and dance together!',
     exec: (m, args) => {
         const [name, frequency, day, time, channel, role, ...messageWords] = args;
 

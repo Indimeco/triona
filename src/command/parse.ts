@@ -3,7 +3,7 @@ import { isNil, match, toLower, unless } from 'ramda';
 const commandRegex = (prefix: string) => new RegExp(`^${prefix}([\\w\\d]+)`, 'i');
 
 export const getArgs = (message: string): string[] => match(
-    /(?<=\s)[\w\d:!\.\?]+/ig,
+    /(?<=\s)[\w\d:!\.\?\+\-]+/ig,
     message
 );
 

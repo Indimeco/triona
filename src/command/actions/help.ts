@@ -1,13 +1,15 @@
 import { map, pipe, prop, join, isEmpty, length } from "ramda";
-import { ActionItem, getActions, getAction } from "."
+import { getActions, getAction } from "../getAction"
+import { ActionItem } from "../types";
 
 const listCommands = () => pipe(
     map(getCommandDetail),
-    join('\n')
+    join('')
 )(getActions());
 
-const getCommandDetail = (action: ActionItem) => `**${prop('command', action)}**: ${prop('desc', action)}`;
-const getCommandUsage = (action: ActionItem) => `\`${prop('usage', action)}\``;
+const getCommandDetail = (action: ActionItem) => `**${prop('command', action)}**: ${prop('desc', action)}\n`;
+const getCommandUsage = (action: ActionItem) => `\`${prop('usage', action)}\`\n`;
+const getCommandExample = ({ example }: ActionItem) => example ? `\nExample: \`${example}\`\n` : '';
 
 export const help: ActionItem = {
     command: 'help',
@@ -22,12 +24,11 @@ export const help: ActionItem = {
         if (length(args) === 1) {
             const action = getAction(args[0]);
             if (action) {
-                message.channel.send(`${getCommandDetail(action)}\n${getCommandUsage(action)}`);
+                message.channel.send(`${getCommandDetail(action)}${getCommandUsage(action)}${getCommandExample(action)}`);
                 return;
             }
         }
 
         message.channel.send('Command not found. Use `help` to list available commands.')
-        return;
     }
 }

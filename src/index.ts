@@ -2,6 +2,7 @@ import { Client, Message } from 'discord.js';
 import { config as dotenvConfig } from 'dotenv';
 import { processCommand } from './command';
 import { config } from './config';
+import { checkAlarms } from './time/alarm';
 
 dotenvConfig();
 
@@ -13,5 +14,9 @@ client.once('ready', async () => {
 client.on('message', (message: Message) => {
     processCommand(config, message);
 })
+
+client.setInterval(() => {
+    checkAlarms(client);
+}, 60000);
 
 client.login(process.env.BOT_TOKEN);
