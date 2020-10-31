@@ -7,8 +7,8 @@ import { getAlarmTime } from "../../time/alarm";
 export const setAlarm: ActionItem = {
     command: 'setalarm',
     desc: `Create an alarm for a specific server time`,
-    usage: 'setalarm <unique_name> <once|daily|weekly|monthly> <day_of_week|day_of_month> <24_hour_time> <channel> <role> <message>',
-    example: 'setalarm danceparty daily tuesday 22:00 general here Come and dance together!',
+    usage: 'setalarm <unique_name> <daily|weekly|monthly> <daily|day_of_week|day_of_month> <24_hour_time> <channel> <role> <message>',
+    example: 'setalarm danceparty weekly tuesday 22:00 general here Come and dance together!',
     exec: (m, args) => {
         const [name, frequency, day, time, channel, role, ...messageWords] = args;
 

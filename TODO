@@ -3,5 +3,5 @@
 // TODO add tests to command framework
 // TODO add list alarms command
 // TODO alphabetise commands list for help
-// TODO add monthly/weekly/once occurence features to alarm 
+// TODO add once frequency feature to alarm 
 // TODO alarms should be timeout based instead of interval based for perf

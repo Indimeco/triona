@@ -23,7 +23,9 @@ export const getAlarmTime = (zone: string, alarm: AlarmConfig) => {
     const [hour, minute] = alarm.time.split(":").map(x => Number(x));
 
     let restDateConfig = {};
-    const weekDay = getWeekDay(alarm.day);
+    const weekDay = alarm.day === 'daily'
+        ? DateTime.fromObject({ zone: zone }).weekday
+        : getWeekDay(alarm.day);
     if (weekDay) {
         restDateConfig = { weekDay }
     }
