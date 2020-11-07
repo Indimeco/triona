@@ -32,7 +32,7 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
     if (dispatch) {
       const newGuildData = modifyGuildData(guildData, dispatch);
       writeGuildData(guildId, newGuildData);
-      message.channel.send('Got it!');
+      message.channel.send('Got it~');
     }
   } else {
     message.channel.send("I'm not sure about that. Try `help` for available commands~");
