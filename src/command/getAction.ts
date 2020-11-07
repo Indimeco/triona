@@ -1,7 +1,7 @@
-import { unless, isNil, find, propEq, toLower, ifElse, always } from 'ramda';
+import { isNil, find, propEq, toLower, ifElse, always } from 'ramda';
 import { ActionItem, Actions } from './types';
 
-import { ping, help, setAlarm, setServerTime, serverTime } from './actions';
+import { ping, help, setAlarm, setServerTime, serverTime, listAlarms, deleteAlarm } from './actions';
 
 export const getAction: (command?: string | null) => ActionItem | null = ifElse(
     isNil,
@@ -16,5 +16,7 @@ export const getActions: () => Actions = () => [
     help,
     setAlarm,
     setServerTime,
-    serverTime
+    serverTime,
+    listAlarms,
+    deleteAlarm
 ]

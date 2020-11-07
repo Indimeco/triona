@@ -11,12 +11,17 @@ export type SetAlarmAction = {
     value: AlarmConfig,
 }
 
+export type DeleteAlarmAction = {
+    name: 'deletealarm',
+    value: string;
+}
+
 export type SetServerZoneAction = {
     name: "setservertime",
     value: string
 }
 
-export type GuildDataDispatch = SetAlarmAction | SetServerZoneAction;
+export type GuildDataDispatch = SetAlarmAction | DeleteAlarmAction | SetServerZoneAction;
 
 export const modifyGuildData: (prevGuildData: GuildData, action: GuildDataDispatch) => GuildData = (prevGuildData, { name, value }) => {
     switch (name) {
@@ -29,6 +34,15 @@ export const modifyGuildData: (prevGuildData: GuildData, action: GuildDataDispat
                     newAlarm
                 ]
             };
+
+        case 'deletealarm':
+            const alarmToDelete = value as string;
+            return {
+                ...prevGuildData,
+                alarms: [
+                    ...prevGuildData.alarms.filter(alarm => alarm.name !== alarmToDelete)
+                ]
+            }
 
         case 'setservertime':
             const newOffset = value as string;
