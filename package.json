@@ -36,6 +36,8 @@
     "build": "yarn build:clean && yarn build:compile",
     "prestart": "yarn build:compile",
     "start": "node build/index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "yarn jest",
+    "test:watch": "yarn jest --watch"
   }
 }
