@@ -27,6 +27,6 @@ export const help: ActionItem = {
       }
     }
 
-    message.channel.send('Command not found. Use `help` to list available commands.');
+    message.channel.send('Command not found. Use `help` to list available commands~');
   },
 };

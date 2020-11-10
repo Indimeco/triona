@@ -1,9 +1,16 @@
 {
-  "name": "triona",
+  "name": "@indimeco/triona",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
   "author": "Indimeco <18373729+Indimeco@users.noreply.github.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indimeco/triona"
+  },
   "dependencies": {
     "dedent-js": "^1.0.1",
     "discord.js": "^12.3.1",

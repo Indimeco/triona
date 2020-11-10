@@ -1,3 +1,5 @@
+// TODO Get provisioning script to run on deploy, inc getting bot token
+// TODO Write backup script to store guild data before re-deployment
 // TODO replace fs storage with something like sqlite
 // TODO create terraform configuration
 // TODO create deletealarm command
