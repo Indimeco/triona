@@ -11,3 +11,7 @@ variable "cidr_subnet" {
   description = "CIDR block for the subnet"
   default     = "10.1.0.0/24"
 }
+
+variable "bot_token" {
+  description = "Discord token for the bot"
+}

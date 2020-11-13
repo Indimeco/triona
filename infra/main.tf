@@ -11,12 +11,29 @@ provider "aws" {
   region  = var.region
 }
 
+data "template_file" "provisioner" {
+  template  = file("./provision.tpl")
+  vars      = {
+    BOT_TOKEN = var.bot_token
+  }
+}
+
+data "template_cloudinit_config" "config" {
+  gzip          = false
+  base64_encode = false
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = data.template_file.provisioner.rendered
+  }
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
   filter {
@@ -24,7 +41,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["099720109477"] # Canonicall
 }
 
 resource "aws_vpc" "main" {
@@ -83,10 +100,6 @@ resource "aws_security_group" "discord_traffic" {
   }
 }
 
-data "template_file" "user_data" {
-  template = file("./user.yml")
-}
-
 resource "aws_key_pair" "deployer" {
   key_name   = "id_rsa_triona"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOsocZcS1o8sKonfiDufFHq1tFG/oo08M9wWSPT5vsN0cESFmMUhaajg+22M4w97UdDxPn4YSGwKuo9q83zRZJ/3+eRhAKcEFp38dIUZsT30PfuBuiuAs4oEu7BP1GS5jbVzq30Hhz61UBD+z2WPvwumPsinJ/CjCrIcc4Lpq0RaCnzj1Jm5r2Pxa8mO9gxPRXqxNLi79y7G7fFUwD0xRgeOnX9mxkRTYxodk/u8CbFopxl1ZsZEGXL9MWTc9sJIEHMbPR1QqyI1GdQfAjjn1tF8YFtB2ADzFfzc/pMgkmhgUMYb4cBD3DnuD0Or+uL9V3FA2tfdB1TX4DDTYnUTTUx3odtz77Lv7w/sgm0oNV63AiSm9MqTF189eJvMWHaBDdlVoZNhycPE5gKhLS/lHuEmYz3Qy6wg5Er290pt/nBLmW6Ielk+RfvfbsAeZ7TSXHvh4u4hBF31MVWPzHNwtMKzjCrj60BoQTjPbh0ismwrWw6XhFDnxCh0MYaToEviFpWG3ggS/0j9QtpOZZ+RJn+S3Pz8ODiwcxJ1GSJAj3rWdka7vyK+VvYKIUcMbP66se0pYG9Suo9m6XUJJHVHxCEBRuXEY39KEGRO+dVWJPSEurP3lDRMuYIPpSlmjleG9/Z1BBAm1JjXslgxQ7Lxb/ahyaihdVfKjDBKXOpuVtrQ== TrionaBot@gmail.com"
@@ -99,6 +112,7 @@ resource "aws_instance" "discord_client" {
   vpc_security_group_ids      = [aws_security_group.discord_traffic.id]
   associate_public_ip_address = true
   key_name                    = aws_key_pair.deployer.key_name
+  user_data                   = data.template_cloudinit_config.config.rendered
 
   tags = {
     Name = "Triona"

@@ -1,9 +1,6 @@
-// TODO Get provisioning script to run on deploy, inc getting bot token
 // TODO Write backup script to store guild data before re-deployment
 // TODO replace fs storage with something like sqlite
 // TODO create terraform configuration
-// TODO create deletealarm command
-// TODO add list alarms command
 // TODO alphabetise commands list for help
 // TODO add once frequency feature to alarm 
 // TODO alarms should be timeout based instead of interval based for perf
