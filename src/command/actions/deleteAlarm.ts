@@ -22,5 +22,6 @@ export const deleteAlarm: ActionItem = {
     }
 
     m.channel.send('You do not have an alarm with that name~');
+    return undefined;
   },
 };

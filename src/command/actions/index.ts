@@ -6,3 +6,4 @@ export * from './setAlarm';
 export * from './setServerTime';
 export * from './deleteAlarm';
 export * from './listAlarms';
+export * from './about';

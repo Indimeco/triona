@@ -37,4 +37,5 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
   } else {
     message.channel.send("I'm not sure about that. Try `help` for available commands~");
   }
+  return true;
 };
