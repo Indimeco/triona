@@ -25,6 +25,7 @@ export const setServerTime: ActionItem = {
       return dispatch;
     } catch (err) {
       m.channel.send(`${err}, see timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones`);
+      return undefined;
     }
   },
 };

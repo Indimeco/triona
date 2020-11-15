@@ -49,6 +49,7 @@ export const setAlarm: ActionItem = {
       return dispatch;
     } catch (err) {
       m.channel.send(`${err}! Try \`help setalarm\` for usage.`);
+      return undefined;
     }
   },
 };

@@ -29,6 +29,8 @@ export const modifyGuildData: (prevGuildData: GuildData, action: GuildDataDispat
   { name, value },
 ) => {
   switch (name) {
+    default:
+      throw new Error(`Unknown dispatch issued: ${name}`);
     case 'setalarm':
       const newAlarm = value as AlarmConfig;
       return {
