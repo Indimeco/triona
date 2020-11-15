@@ -53,7 +53,7 @@ export const fireAlarm = ({ guildId, alarm, client }: { guildId: string; alarm: 
   const channel = guild?.channels.cache.find(x => x.name === alarm.channel);
   if (channel?.type === 'text') {
     const textChannel = channel as TextChannel;
-    textChannel.send(`@${alarm.role} ${alarm.message}`);
+    textChannel.send(`${alarm.role} ${alarm.message}`);
   }
 };
 

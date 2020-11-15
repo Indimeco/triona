@@ -14,7 +14,7 @@ export const listAlarms: ActionItem = {
             frequency: ${frequency}
             ${day !== 'daily' && `day: ${day}`}
             time: ${time}
-            role: ${role}
+            role: \`${role}\`
             channel: ${channel}
             message: ${message}
             ---
