@@ -8,7 +8,7 @@ export type ActionItem = {
   desc: string;
   usage: string;
   example?: string;
-  exec: (message: Message, args: string[], guildData: GuildData) => GuildDataDispatch | void;
+  exec: (message: Message, args: string[], guildData: GuildData) => GuildDataDispatch | void | Promise<void>;
 };
 
 export type Actions = ActionItem[];

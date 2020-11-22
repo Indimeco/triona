@@ -28,7 +28,7 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
      */
     const guildData = await getGuildData(guildId);
 
-    const dispatch = action.exec(message, args, guildData);
+    const dispatch = await action.exec(message, args, guildData);
     if (dispatch) {
       const newGuildData = modifyGuildData(guildData, dispatch);
       writeGuildData(guildId, newGuildData);

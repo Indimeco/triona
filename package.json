@@ -20,6 +20,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.1.2",
     "luxon": "^1.25.0",
+    "node-fetch": "^2.6.1",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "@types/jest": "^26.0.15",
     "@types/luxon": "^1.25.0",
     "@types/node": "^14.11.10",
+    "@types/node-fetch": "^2.5.7",
     "@types/ramda": "^0.27.29",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
@@ -48,6 +50,7 @@
   "scripts": {
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
+    "prepublish": "yarn build",
     "postpublish": "pinst --enable",
     "build:clean": "rm -rf build",
     "build:compile": "yarn tsc",
