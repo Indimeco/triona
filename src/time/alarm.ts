@@ -1,10 +1,17 @@
-import { Client, TextChannel } from 'discord.js';
+import { Client, MessageEmbed, TextChannel } from 'discord.js';
 import { DateTime, Settings } from 'luxon';
 
+import { getDailies } from '../command/actions/dailies';
 import { getGuildData } from '../guild';
-import { AlarmConfig } from '../types';
+import { AlarmConfig, GuildData } from '../types';
 
 Settings.throwOnInvalid = true;
+
+const systemFunctions: {
+  [name: string]: (data: GuildData) => Promise<(string | MessageEmbed | null)[]>;
+} = {
+  dailies: getDailies,
+};
 
 const getWeekDay: (day: string) => number | null = day => {
   const weekDays = {
@@ -48,12 +55,31 @@ export const shouldFireAlarm = ({ serverTime, alarmTime }: { serverTime: DateTim
   );
 };
 
-export const fireAlarm = ({ guildId, alarm, client }: { guildId: string; alarm: AlarmConfig; client: Client }) => {
+export const fireAlarm = async ({
+  guildId,
+  alarm,
+  client,
+}: {
+  guildId: string;
+  alarm: AlarmConfig;
+  client: Client;
+}) => {
   const guild = client.guilds.cache.find(x => x.id === guildId);
   const channel = guild?.channels.cache.find(x => x.name === alarm.channel);
-  if (channel?.type === 'text') {
-    const textChannel = channel as TextChannel;
-    textChannel.send(`${alarm.role} ${alarm.message}`);
+  // this sort of validation should actually happen on alarm creation, not here
+  if (channel?.type !== 'text') return;
+
+  const textChannel = channel as TextChannel;
+  if (alarm.message) {
+    const role = alarm.role ? `${alarm.role} ` : '';
+    textChannel.send(`${role}${alarm.message}`);
+  } else if (alarm.systemFunction) {
+    const systemFn = systemFunctions[alarm.systemFunction];
+    if (systemFn) {
+      const guildData = await getGuildData(guildId);
+      const invokedMessages = await systemFn(guildData);
+      invokedMessages.forEach(message => textChannel.send(message));
+    }
   }
 };
 

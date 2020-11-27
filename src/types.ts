@@ -11,8 +11,9 @@ export type AlarmConfig = {
   day: string;
   time: string;
   channel: string;
-  role: string;
-  message: string;
+  role?: string;
+  message?: string;
+  systemFunction?: string;
 };
 
 export type GuildData = {

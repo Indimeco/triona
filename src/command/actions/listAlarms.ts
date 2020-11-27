@@ -12,7 +12,7 @@ export const listAlarms: ActionItem = {
     const getAlarmString = ({ name, frequency, time, day, role, channel, message }: AlarmConfig) => dedent`
             **${name}**
             frequency: ${frequency}
-            ${day !== 'daily' && `day: ${day}`}
+            day: ${day}
             time: ${time}
             role: \`${role}\`
             channel: ${channel}
