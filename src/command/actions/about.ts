@@ -1,5 +1,6 @@
 import dedent from 'dedent-js';
 
+import { sendMessage } from '../../sendMessage';
 import { ActionItem } from '../types';
 
 export const about: ActionItem = {
@@ -12,6 +13,6 @@ export const about: ActionItem = {
 
     **Submit Bug Report or Feature Request:** <https://github.com/Indimeco/triona/issues/new>
     `;
-    m.channel.send(info);
+    sendMessage(m, info);
   },
 };

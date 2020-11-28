@@ -1,3 +1,4 @@
+import { sendMessage } from '../../sendMessage';
 import { ActionItem } from '../types';
 
 export const ping: ActionItem = {
@@ -5,6 +6,6 @@ export const ping: ActionItem = {
   desc: `Test Triona's connectivity`,
   usage: 'ping',
   exec: m => {
-    m.channel.send('Pong!');
+    sendMessage(m, 'Pong!');
   },
 };

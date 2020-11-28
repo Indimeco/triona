@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 
 import { ActionItem } from '../types';
 import { SetServerZoneAction } from '../../guild';
+import { sendMessage } from '../../sendMessage';
 
 export const setServerTime: ActionItem = {
   command: 'setservertime',
@@ -24,7 +25,7 @@ export const setServerTime: ActionItem = {
       };
       return dispatch;
     } catch (err) {
-      m.channel.send(`${err}, see timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones`);
+      sendMessage(m, `${err}, see timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones`);
       return undefined;
     }
   },

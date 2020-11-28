@@ -3,6 +3,7 @@ import dedent from 'dedent-js';
 
 import { ActionItem } from '../types';
 import { AlarmConfig } from '../../types';
+import { sendMessage } from '../../sendMessage';
 
 export const listAlarms: ActionItem = {
   command: 'listalarms',
@@ -23,9 +24,9 @@ export const listAlarms: ActionItem = {
     const alarmList = join('\n', map(getAlarmString, alarms));
 
     if (alarmList) {
-      m.channel.send(alarmList);
+      sendMessage(m, alarmList);
     } else {
-      m.channel.send('You do not have any alarms configured~');
+      sendMessage(m, 'You do not have any alarms configured~');
     }
   },
 };

@@ -2,6 +2,7 @@ import { Message } from 'discord.js';
 
 import { ConfigSchema } from '../config';
 import { getGuildData, modifyGuildData, writeGuildData } from '../guild';
+import { sendMessage } from '../sendMessage';
 
 import { getCommand, getArgs } from './parse';
 import { getAction } from './getAction';
@@ -32,10 +33,10 @@ export const processCommand = async (config: ConfigSchema, message: Message) => 
     if (dispatch) {
       const newGuildData = modifyGuildData(guildData, dispatch);
       writeGuildData(guildId, newGuildData);
-      message.channel.send('Got it~');
+      sendMessage(message, 'Got it~');
     }
   } else {
-    message.channel.send("I'm not sure about that. Try `help` for available commands~");
+    sendMessage(message, "I'm not sure about that. Try `help` for available commands~");
   }
   return true;
 };

@@ -2,6 +2,7 @@ import { find, propEq } from 'ramda';
 
 import { ActionItem } from '../types';
 import { DeleteAlarmAction } from '../../guild';
+import { sendMessage } from '../../sendMessage';
 
 export const deleteAlarm: ActionItem = {
   command: 'deletealarm',
@@ -21,7 +22,7 @@ export const deleteAlarm: ActionItem = {
       return dispatch;
     }
 
-    m.channel.send('You do not have an alarm with that name~');
+    sendMessage(m, 'You do not have an alarm with that name~');
     return undefined;
   },
 };

@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { ActionItem } from '../types';
 import { getServerTime } from '../../time/time';
 import { GuildData } from '../../types';
+import { sendMessage } from '../../sendMessage';
 
 const apiUrl = always('http://mabi.world/sm/mww/');
 
@@ -63,9 +64,9 @@ export const dailies: ActionItem = {
   exec: async (m, _, guildData) => {
     const dailyMessages = await getDailies(guildData);
     if (!dailyMessages) {
-      m.channel.send(`Uhoh, I can't find that information right now~`);
+      sendMessage(m, `Uhoh, I can't find that information right now~`);
       return;
     }
-    dailyMessages.forEach(dailyM => m.channel.send(dailyM));
+    dailyMessages.forEach(dailyM => sendMessage(m, dailyM));
   },
 };

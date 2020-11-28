@@ -3,6 +3,7 @@ import { map, pipe, prop, join } from 'ramda';
 // eslint-disable-next-line import/no-cycle
 import { getActions, getAction } from '../getAction';
 import { ActionItem } from '../types';
+import { sendMessage } from '../../sendMessage';
 
 const getCommandDetail = (action: ActionItem) => `**${prop('command', action)}**: ${prop('desc', action)}\n`;
 const listCommands = () => pipe(map(getCommandDetail), join(''))(getActions());
@@ -16,16 +17,16 @@ export const help: ActionItem = {
   usage: 'help <command>',
   exec: (message, [command]) => {
     if (!command) {
-      message.channel.send(listCommands(), { split: true });
+      sendMessage(message, listCommands(), { split: true });
       return;
     }
 
     const action = getAction(command);
     if (action) {
-      message.channel.send(`${getCommandDetail(action)}${getCommandUsage(action)}${getCommandExample(action)}`);
+      sendMessage(message, `${getCommandDetail(action)}${getCommandUsage(action)}${getCommandExample(action)}`);
       return;
     }
 
-    message.channel.send(helpError);
+    sendMessage(message, helpError);
   },
 };

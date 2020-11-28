@@ -4,6 +4,7 @@ import { ActionItem } from '../types';
 import { AlarmConfig, AlarmFrequency } from '../../types';
 import { SetAlarmAction } from '../../guild';
 import { getAlarmTime } from '../../time/alarm';
+import { sendMessage } from '../../sendMessage';
 
 const isMention = (mention: string) => /^<@!?&?(\d+)>$|^@(everyone|here)$/.test(mention);
 
@@ -48,7 +49,7 @@ export const setAlarm: ActionItem = {
       };
       return dispatch;
     } catch (err) {
-      m.channel.send(`${err}! Try \`help setalarm\` for usage.`);
+      sendMessage(m, `${err}! Try \`help setalarm\` for usage.`);
       return undefined;
     }
   },

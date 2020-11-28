@@ -5,7 +5,7 @@ import { ping } from './ping';
 
 const fakeMessage: any = {
   channel: {
-    send: jest.fn(),
+    send: jest.fn().mockImplementation(() => Promise.resolve()),
   },
 };
 

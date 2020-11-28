@@ -5,3 +5,4 @@
 // TODO add once frequency feature to alarm 
 // TODO alarms should be timeout based instead of interval based for perf
 // TODO add sm party count
+// TODO alarms should check channel and permissions before setting, elsewise its hard to catch the error later

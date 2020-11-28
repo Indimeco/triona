@@ -2,6 +2,7 @@ import { ActionItem } from '../types';
 import { AlarmConfig, AlarmFrequency } from '../../types';
 import { SetAlarmAction } from '../../guild';
 import { getAlarmTime } from '../../time/alarm';
+import { sendMessage } from '../../sendMessage';
 
 import { missionHour } from './dailies';
 
@@ -36,7 +37,7 @@ export const setDailiesAlarm: ActionItem = {
       };
       return dispatch;
     } catch (err) {
-      m.channel.send(`${err}! Try \`help setdailiesalarm\` for usage.`);
+      sendMessage(m, `${err}! Try \`help setdailiesalarm\` for usage.`);
       return undefined;
     }
   },
