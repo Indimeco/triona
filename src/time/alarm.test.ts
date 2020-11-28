@@ -2,7 +2,7 @@ import { DateTime, Settings } from 'luxon';
 
 import { AlarmConfig, AlarmFrequency } from '../types';
 
-import { getAlarmTime, shouldFireAlarm } from './alarm';
+import { getAlarmTime, shouldFireAlarm, getSystemFunction, SystemFunctionItem } from './alarm';
 
 const genericAlarm: AlarmConfig = {
   name: 'Test',
@@ -46,6 +46,22 @@ describe('gets correct alarm time from an alarm config', () => {
         year: 1991,
       }),
     );
+  });
+
+  it('can read alarm config for system function and execute that function', async () => {
+    const alarm: AlarmConfig = {
+      name: 'Test',
+      frequency: AlarmFrequency.weekly,
+      day: 'daily',
+      time: '10:30',
+      channel: '#bots',
+      systemFunction: 'test',
+    };
+
+    const item: SystemFunctionItem | undefined = getSystemFunction(alarm.systemFunction as string);
+    expect(item).not.toBeFalsy();
+    const result = await (item as SystemFunctionItem).fn({ serverTimezone: 'UTC+0', alarms: [alarm] });
+    expect(result).toStrictEqual(['success']);
   });
 
   /**

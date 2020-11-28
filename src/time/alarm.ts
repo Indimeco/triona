@@ -1,5 +1,6 @@
 import { Client, MessageEmbed, TextChannel } from 'discord.js';
 import { DateTime, Settings } from 'luxon';
+import { find } from 'ramda';
 
 import { getDailies } from '../command/actions/dailies';
 import { getGuildData } from '../guild';
@@ -7,11 +8,18 @@ import { AlarmConfig, GuildData } from '../types';
 
 Settings.throwOnInvalid = true;
 
-const systemFunctions: {
-  [name: string]: (data: GuildData) => Promise<(string | MessageEmbed | null)[]>;
-} = {
-  dailies: getDailies,
-};
+export type SystemFnSignature = (data: GuildData) => Promise<(string | MessageEmbed | null)[]>;
+export type SystemFunctionItem = { name: string; fn: SystemFnSignature };
+const systemFunctions: SystemFunctionItem[] = [
+  {
+    name: 'test',
+    fn: () => Promise.resolve(['success']),
+  },
+  { name: 'dailies', fn: getDailies },
+];
+
+export const getSystemFunction = (name: string) =>
+  find((item: SystemFunctionItem) => item.name === name, systemFunctions);
 
 const getWeekDay: (day: string) => number | null = day => {
   const weekDays = {
@@ -74,10 +82,10 @@ export const fireAlarm = async ({
     const role = alarm.role ? `${alarm.role} ` : '';
     textChannel.send(`${role}${alarm.message}`);
   } else if (alarm.systemFunction) {
-    const systemFn = systemFunctions[alarm.systemFunction];
-    if (systemFn) {
+    const systemFn = getSystemFunction(alarm.systemFunction);
+    if (systemFn?.fn) {
       const guildData = await getGuildData(guildId);
-      const invokedMessages = await systemFn(guildData);
+      const invokedMessages = await systemFn.fn(guildData);
       invokedMessages.forEach(message => textChannel.send(message));
     }
   }
