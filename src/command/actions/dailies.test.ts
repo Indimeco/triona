@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-import { getMissionSearchDate } from './dailies';
+import { getShadowData, getMissionSearchDate } from './dailies';
 
 describe('dailies', () => {
   it('gets correct mission day after misson hour', () => {
@@ -34,5 +34,13 @@ describe('dailies', () => {
 
     const missionTime = getMissionSearchDate(now);
     expect(missionTime).toStrictEqual(dayBefore);
+  });
+
+  it('finds mission data for a given mission name', () => {
+    const missionName = 'Defeat the Shadow Wizard';
+    const missionData = getShadowData(missionName);
+
+    expect(missionData?.name).toStrictEqual(missionName);
+    expect(missionData?.party).toStrictEqual('1~8');
   });
 });
