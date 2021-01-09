@@ -9,3 +9,4 @@ export * from './listAlarms';
 export * from './about';
 export * from './dailies';
 export * from './setDailiesAlarm';
+export * from './weather';

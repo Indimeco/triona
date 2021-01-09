@@ -13,6 +13,7 @@ import {
   about,
   dailies,
   setDailiesAlarm,
+  weather,
 } from './actions';
 
 export const getActions: () => Actions = () => [
@@ -26,6 +27,7 @@ export const getActions: () => Actions = () => [
   about,
   dailies,
   setDailiesAlarm,
+  weather,
 ];
 
 export const getAction: (command?: string | null) => ActionItem | null = ifElse(isNil, always(null), (c: string) =>
