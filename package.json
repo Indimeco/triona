@@ -1,6 +1,6 @@
 {
   "name": "@indimeco/triona",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "build/index.js",
   "files": [
     "build"
@@ -48,7 +48,7 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "prepublish": "yarn build",
     "postpublish": "pinst --enable",
