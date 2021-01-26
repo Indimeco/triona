@@ -1,2 +1,4 @@
 *.tfstate*
 credentials
+NOTES
+.terraform.lock.hcl

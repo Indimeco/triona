@@ -36,7 +36,7 @@ type ForecastResponse = { from: string; forecast: Forecast };
 
 const getWeatherFromInt = (i: number) => {
   if (i <= -5) return Weather.SUNNY;
-  if (i <= 0) return Weather.CLOUDY;
+  if (i <= -1) return Weather.CLOUDY;
   if (i <= 10) return Weather.SPRINKLING;
   if (i <= 19) return Weather.RAINY;
   return Weather.THUNDER;
